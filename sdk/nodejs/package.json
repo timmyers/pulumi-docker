@@ -1,6 +1,6 @@
 {
     "name": "@pulumi/docker",
-    "version": "${VERSION}",
+    "version": "0.17.2",
     "description": "A Pulumi package for interacting with Docker in Pulumi programs",
     "keywords": [
         "pulumi",
