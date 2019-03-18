@@ -8,14 +8,14 @@ from subprocess import check_call
 class InstallPluginCommand(install):
     def run(self):
         install.run(self)
-        check_call(['pulumi', 'plugin', 'install', 'resource', 'docker', 'v0.17.1-dev.1552936594+ge8cf56d'])
+        check_call(['pulumi', 'plugin', 'install', 'resource', 'docker', 'v0.17.1-dev.1552952305+g9e07f78.dirty'])
 
 def readme():
     with open('README.rst') as f:
         return f.read()
 
 setup(name='pulumi_docker',
-      version='0.17.1.dev1552936594',
+      version='0.17.1.dev1552952305+dirty',
       description='A Pulumi package for interacting with Docker in Pulumi programs',
       long_description=readme(),
       cmdclass={

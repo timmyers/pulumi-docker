@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: pulumi-docker
-Version: 0.17.1.dev1552936594
+Version: 0.17.1.dev1552952305+dirty
 Summary: A Pulumi package for interacting with Docker in Pulumi programs
 Home-page: https://pulumi.io
 Author: UNKNOWN
