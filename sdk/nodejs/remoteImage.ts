@@ -4,37 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
-/**
- * Pulls a Docker image to a given Docker host from a Docker Registry.
- * 
- * This resource will *not* pull new layers of the image automatically unless used in
- * conjunction with [`docker_registry_image`](https://www.terraform.io/docs/providers/docker/d/registry_image.html)
- * data source to update the `pull_triggers` field.
- * 
- * ## Example Usage
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as docker from "@pulumi/docker";
- * 
- * // Find the latest Ubuntu precise image.
- * const ubuntu = new docker.RemoteImage("ubuntu", {});
- * ```
- * 
- * ### Dynamic image
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as docker from "@pulumi/docker";
- * 
- * const ubuntuRegistryImage = pulumi.output(docker.RegistryImage({
- *     name: "ubuntu:precise",
- * }));
- * const ubuntuRemoteImage = new docker.RemoteImage("ubuntu", {
- *     pullTriggers: [ubuntuRegistryImage.apply(ubuntuRegistryImage => ubuntuRegistryImage.sha256Digest)],
- * });
- * ```
- */
 export class RemoteImage extends pulumi.CustomResource {
     /**
      * Get an existing RemoteImage resource's state with the given name, ID, and optional extra
@@ -48,27 +17,10 @@ export class RemoteImage extends pulumi.CustomResource {
         return new RemoteImage(name, <any>state, { ...opts, id: id });
     }
 
-    /**
-     * If true, then the Docker image won't be
-     * deleted on destroy operation. If this is false, it will delete the image from
-     * the docker local storage on destroy operation.
-     */
     public readonly keepLocally: pulumi.Output<boolean | undefined>;
     public /*out*/ readonly latest: pulumi.Output<string>;
-    /**
-     * The name of the Docker image, including any tags or SHA256 repo digests.
-     */
     public readonly name: pulumi.Output<string>;
-    /**
-     * **Deprecated**, use `pull_triggers` instead.
-     */
     public readonly pullTrigger: pulumi.Output<string | undefined>;
-    /**
-     * List of values which cause an
-     * image pull when changed. This is used to store the image digest from the
-     * registry when using the `docker_registry_image` [data source](https://www.terraform.io/docs/providers/docker/d/registry_image.html)
-     * to trigger an image update.
-     */
     public readonly pullTriggers: pulumi.Output<string[] | undefined>;
 
     /**
@@ -107,27 +59,10 @@ export class RemoteImage extends pulumi.CustomResource {
  * Input properties used for looking up and filtering RemoteImage resources.
  */
 export interface RemoteImageState {
-    /**
-     * If true, then the Docker image won't be
-     * deleted on destroy operation. If this is false, it will delete the image from
-     * the docker local storage on destroy operation.
-     */
     readonly keepLocally?: pulumi.Input<boolean>;
     readonly latest?: pulumi.Input<string>;
-    /**
-     * The name of the Docker image, including any tags or SHA256 repo digests.
-     */
     readonly name?: pulumi.Input<string>;
-    /**
-     * **Deprecated**, use `pull_triggers` instead.
-     */
     readonly pullTrigger?: pulumi.Input<string>;
-    /**
-     * List of values which cause an
-     * image pull when changed. This is used to store the image digest from the
-     * registry when using the `docker_registry_image` [data source](https://www.terraform.io/docs/providers/docker/d/registry_image.html)
-     * to trigger an image update.
-     */
     readonly pullTriggers?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
@@ -135,25 +70,8 @@ export interface RemoteImageState {
  * The set of arguments for constructing a RemoteImage resource.
  */
 export interface RemoteImageArgs {
-    /**
-     * If true, then the Docker image won't be
-     * deleted on destroy operation. If this is false, it will delete the image from
-     * the docker local storage on destroy operation.
-     */
     readonly keepLocally?: pulumi.Input<boolean>;
-    /**
-     * The name of the Docker image, including any tags or SHA256 repo digests.
-     */
     readonly name: pulumi.Input<string>;
-    /**
-     * **Deprecated**, use `pull_triggers` instead.
-     */
     readonly pullTrigger?: pulumi.Input<string>;
-    /**
-     * List of values which cause an
-     * image pull when changed. This is used to store the image digest from the
-     * registry when using the `docker_registry_image` [data source](https://www.terraform.io/docs/providers/docker/d/registry_image.html)
-     * to trigger an image update.
-     */
     readonly pullTriggers?: pulumi.Input<pulumi.Input<string>[]>;
 }

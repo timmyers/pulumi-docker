@@ -4,21 +4,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as utilities from "./utilities";
 
-/**
- * Manages a Docker Network. This can be used alongside
- * [docker\_container](https://www.terraform.io/docs/providers/docker/r/container.html)
- * to create virtual networks within the docker environment.
- * 
- * ## Example Usage
- * 
- * ```typescript
- * import * as pulumi from "@pulumi/pulumi";
- * import * as docker from "@pulumi/docker";
- * 
- * // Create a new docker network
- * const privateNetwork = new docker.Network("private_network", {});
- * ```
- */
 export class Network extends pulumi.CustomResource {
     /**
      * Get an existing Network resource's state with the given name, ID, and optional extra
@@ -32,58 +17,16 @@ export class Network extends pulumi.CustomResource {
         return new Network(name, <any>state, { ...opts, id: id });
     }
 
-    /**
-     * Enable manual container attachment to the network.
-     * Defaults to `false`.
-     */
     public readonly attachable: pulumi.Output<boolean | undefined>;
-    /**
-     * Requests daemon to check for networks
-     * with same name.
-     */
     public readonly checkDuplicate: pulumi.Output<boolean | undefined>;
-    /**
-     * Name of the network driver to use. Defaults to
-     * `bridge` driver.
-     */
     public readonly driver: pulumi.Output<string>;
-    /**
-     * Create swarm routing-mesh network.
-     * Defaults to `false`.
-     */
     public readonly ingress: pulumi.Output<boolean | undefined>;
-    /**
-     * Restrict external access to the network.
-     * Defaults to `false`.
-     */
     public readonly internal: pulumi.Output<boolean>;
-    /**
-     * See IPAM config below for
-     * details.
-     */
     public readonly ipamConfigs: pulumi.Output<{ auxAddress?: {[key: string]: any}, gateway?: string, ipRange?: string, subnet?: string }[] | undefined>;
-    /**
-     * Driver used by the custom IP scheme of the
-     * network.
-     */
     public readonly ipamDriver: pulumi.Output<string | undefined>;
-    /**
-     * Enable IPv6 networking.
-     * Defaults to `false`.
-     */
     public readonly ipv6: pulumi.Output<boolean | undefined>;
-    /**
-     * User-defined key/value metadata.
-     */
     public readonly labels: pulumi.Output<{[key: string]: any} | undefined>;
-    /**
-     * The name of the Docker network.
-     */
     public readonly name: pulumi.Output<string>;
-    /**
-     * Network specific options to be used by
-     * the drivers.
-     */
     public readonly options: pulumi.Output<{[key: string]: any}>;
     public /*out*/ readonly scope: pulumi.Output<string>;
 
@@ -134,58 +77,16 @@ export class Network extends pulumi.CustomResource {
  * Input properties used for looking up and filtering Network resources.
  */
 export interface NetworkState {
-    /**
-     * Enable manual container attachment to the network.
-     * Defaults to `false`.
-     */
     readonly attachable?: pulumi.Input<boolean>;
-    /**
-     * Requests daemon to check for networks
-     * with same name.
-     */
     readonly checkDuplicate?: pulumi.Input<boolean>;
-    /**
-     * Name of the network driver to use. Defaults to
-     * `bridge` driver.
-     */
     readonly driver?: pulumi.Input<string>;
-    /**
-     * Create swarm routing-mesh network.
-     * Defaults to `false`.
-     */
     readonly ingress?: pulumi.Input<boolean>;
-    /**
-     * Restrict external access to the network.
-     * Defaults to `false`.
-     */
     readonly internal?: pulumi.Input<boolean>;
-    /**
-     * See IPAM config below for
-     * details.
-     */
     readonly ipamConfigs?: pulumi.Input<pulumi.Input<{ auxAddress?: pulumi.Input<{[key: string]: any}>, gateway?: pulumi.Input<string>, ipRange?: pulumi.Input<string>, subnet?: pulumi.Input<string> }>[]>;
-    /**
-     * Driver used by the custom IP scheme of the
-     * network.
-     */
     readonly ipamDriver?: pulumi.Input<string>;
-    /**
-     * Enable IPv6 networking.
-     * Defaults to `false`.
-     */
     readonly ipv6?: pulumi.Input<boolean>;
-    /**
-     * User-defined key/value metadata.
-     */
     readonly labels?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * The name of the Docker network.
-     */
     readonly name?: pulumi.Input<string>;
-    /**
-     * Network specific options to be used by
-     * the drivers.
-     */
     readonly options?: pulumi.Input<{[key: string]: any}>;
     readonly scope?: pulumi.Input<string>;
 }
@@ -194,57 +95,15 @@ export interface NetworkState {
  * The set of arguments for constructing a Network resource.
  */
 export interface NetworkArgs {
-    /**
-     * Enable manual container attachment to the network.
-     * Defaults to `false`.
-     */
     readonly attachable?: pulumi.Input<boolean>;
-    /**
-     * Requests daemon to check for networks
-     * with same name.
-     */
     readonly checkDuplicate?: pulumi.Input<boolean>;
-    /**
-     * Name of the network driver to use. Defaults to
-     * `bridge` driver.
-     */
     readonly driver?: pulumi.Input<string>;
-    /**
-     * Create swarm routing-mesh network.
-     * Defaults to `false`.
-     */
     readonly ingress?: pulumi.Input<boolean>;
-    /**
-     * Restrict external access to the network.
-     * Defaults to `false`.
-     */
     readonly internal?: pulumi.Input<boolean>;
-    /**
-     * See IPAM config below for
-     * details.
-     */
     readonly ipamConfigs?: pulumi.Input<pulumi.Input<{ auxAddress?: pulumi.Input<{[key: string]: any}>, gateway?: pulumi.Input<string>, ipRange?: pulumi.Input<string>, subnet?: pulumi.Input<string> }>[]>;
-    /**
-     * Driver used by the custom IP scheme of the
-     * network.
-     */
     readonly ipamDriver?: pulumi.Input<string>;
-    /**
-     * Enable IPv6 networking.
-     * Defaults to `false`.
-     */
     readonly ipv6?: pulumi.Input<boolean>;
-    /**
-     * User-defined key/value metadata.
-     */
     readonly labels?: pulumi.Input<{[key: string]: any}>;
-    /**
-     * The name of the Docker network.
-     */
     readonly name?: pulumi.Input<string>;
-    /**
-     * Network specific options to be used by
-     * the drivers.
-     */
     readonly options?: pulumi.Input<{[key: string]: any}>;
 }
