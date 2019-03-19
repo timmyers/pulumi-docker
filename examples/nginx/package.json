@@ -1,9 +1,0 @@
-{
-    "name": "nginx",
-    "devDependencies": {
-        "@types/node": "latest"
-    },
-    "dependencies": {
-        "@pulumi/pulumi": "dev"
-    }
-}
