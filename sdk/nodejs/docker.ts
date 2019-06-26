@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import * as fs from 'fs';
 import * as pulumi from "@pulumi/pulumi";
 import { ResourceError } from "@pulumi/pulumi/errors";
 import * as utils from "./utils";
@@ -70,6 +71,12 @@ export interface DockerBuild {
      * a CacheFrom object, the stages named therein will also be pulled and passed to --cache-from.
      */
     cacheFrom?: pulumi.Input<boolean | CacheFrom>;
+
+    /**
+     * An optional boolean of whether to enforce linting of the image via `hadolint`. Defaults to
+     * false.
+     */
+    hadolint?: pulumi.Input<boolean>;
 
     /**
      * An optional catch-all string to provide extra CLI options to the docker build command.  For
@@ -323,7 +330,7 @@ interface BuildResult {
     stages: string[];
 }
 
-async function buildImageAsync(
+export async function buildImageAsync(
     imageName: string,
     pathOrBuild: string | pulumi.Unwrap<DockerBuild>,
     logResource: pulumi.Resource,
@@ -349,6 +356,16 @@ async function buildImageAsync(
         `Building container image '${imageName}': context=${build.context}` +
             (build.dockerfile ? `, dockerfile=${build.dockerfile}` : "") +
             (build.args ? `, args=${JSON.stringify(build.args)}` : ""), logResource);
+    
+    if (build.hadolint) {
+      await runCommandThatMustSucceed(
+        "docker", 
+        ["run", "--rm", "-i", "hadolint/hadolint"], 
+        logResource,
+        true,
+        fs.readFileSync(build.dockerfile || 'Dockerfile').toString()
+      );
+    }
 
     // If the container build specified build stages to cache, build each in turn.
     const stages = [];

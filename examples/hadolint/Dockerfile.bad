@@ -1,0 +1,2 @@
+# Fails DL3007 https://github.com/hadolint/hadolint/wiki/DL3007
+FROM alpine:latest

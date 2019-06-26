@@ -1,0 +1,10 @@
+{
+    "name": "hadolint",
+    "devDependencies": {
+        "@types/node": "latest"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "dev",
+        "@pulumi/aws": "dev"
+    }
+}

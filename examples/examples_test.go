@@ -66,6 +66,42 @@ func TestAws(t *testing.T) {
 	}
 }
 
+func TestHadolintGood(t *testing.T) {
+	cwd, err := os.Getwd()
+	if !assert.NoError(t, err) {
+		t.FailNow()
+	}
+
+	opts := base.With(integration.ProgramTestOptions{
+		Config: map[string]string{
+			"goodDockerfile": "true",
+		},
+		Dependencies: []string{
+			"@pulumi/docker",
+		},
+		Dir: path.Join(cwd, "hadolint"),
+	})
+	integration.ProgramTest(t, &opts)
+}
+
+func TestHadolintBad(t *testing.T) {
+	cwd, err := os.Getwd()
+	if !assert.NoError(t, err) {
+		t.FailNow()
+	}
+
+	opts := base.With(integration.ProgramTestOptions{
+		Config: map[string]string{
+			"goodDockerfile": "false",
+		},
+		Dependencies: []string{
+			"@pulumi/docker",
+		},
+		Dir:           path.Join(cwd, "hadolint"),
+		ExpectFailure: true,
+	})
+	integration.ProgramTest(t, &opts)
+}
 func TestNginx(t *testing.T) {
 	cwd, err := os.Getwd()
 	if !assert.NoError(t, err) {
