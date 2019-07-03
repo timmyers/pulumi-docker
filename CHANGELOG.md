@@ -1,6 +1,7 @@
 ## 0.17.2 (Unreleased)
 
 - Add ability to specify arbitrary extra `docker build` CLI options for `buildAndPush...()` functions.
+- Add ability to lint dockerfiles at build-time using `hadolint`.
 
 ## 0.17.1 (Released March 7, 2019)
 
